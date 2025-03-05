@@ -1,10 +1,20 @@
 "use client";
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Header from '../components/layout/Header';
 import { FileText, Download, ChevronDown, Check } from 'lucide-react';
-import { PDFDocument } from './pdf-document';
-import { PDFViewer } from '@react-pdf/renderer';
+import dynamic from 'next/dynamic';
+
+// Dynamically import PDF components to ensure they only load on the client side
+const PDFDocument = dynamic(() => import('./pdf-document').then(mod => ({ default: mod.PDFDocument })), {
+  ssr: false,
+  loading: () => <p>Loading PDF viewer...</p>
+});
+
+const PDFViewer = dynamic(() => import('@react-pdf/renderer').then(mod => ({ default: mod.PDFViewer })), {
+  ssr: false,
+  loading: () => <p>Loading PDF viewer...</p>
+});
 
 export default function MonthlyReport() {
   const [selectedMonth, setSelectedMonth] = useState<string>('February');

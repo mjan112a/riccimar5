@@ -7,6 +7,12 @@ const nextConfig: NextConfig = {
     // your project has ESLint errors.
     ignoreDuringBuilds: true,
   },
+  // Configure transpilation for ESM packages
+  transpilePackages: ['@react-pdf/renderer', 'react-pdf'],
+  // Disable server-side rendering for pages that use PDF rendering
+  experimental: {
+    serverComponentsExternalPackages: ['@react-pdf/renderer'],
+  },
 };
 
 export default nextConfig;

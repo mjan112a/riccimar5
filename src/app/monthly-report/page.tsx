@@ -5,16 +5,21 @@ import Header from '../components/layout/Header';
 import { FileText, Download, ChevronDown, Check } from 'lucide-react';
 import dynamic from 'next/dynamic';
 
-// Dynamically import PDF components to ensure they only load on the client side
-const PDFDocument = dynamic(() => import('./pdf-document').then(mod => ({ default: mod.PDFDocument })), {
-  ssr: false,
-  loading: () => <p>Loading PDF viewer...</p>
-});
-
-const PDFViewer = dynamic(() => import('@react-pdf/renderer').then(mod => ({ default: mod.PDFViewer })), {
-  ssr: false,
-  loading: () => <p>Loading PDF viewer...</p>
-});
+// Dynamically import PDF components with no SSR
+const PDFPreview = dynamic(
+  () => import('./pdf-preview').then((mod) => mod.PDFPreview),
+  { 
+    ssr: false,
+    loading: () => (
+      <div className="flex items-center justify-center h-[600px] border border-gray-300 rounded-md">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-500 mx-auto mb-4"></div>
+          <p className="text-gray-600">Loading PDF viewer...</p>
+        </div>
+      </div>
+    )
+  }
+);
 
 export default function MonthlyReport() {
   const [selectedMonth, setSelectedMonth] = useState<string>('February');
@@ -181,9 +186,7 @@ export default function MonthlyReport() {
               </div>
               
               <div className="border border-gray-300 rounded-md h-[600px] overflow-hidden">
-                <PDFViewer width="100%" height="100%" className="rounded-md">
-                  <PDFDocument data={reportData} />
-                </PDFViewer>
+                <PDFPreview data={reportData} />
               </div>
             </div>
           )}

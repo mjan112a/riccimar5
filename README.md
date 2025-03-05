@@ -77,12 +77,48 @@ This is a comprehensive dashboard application for 10X Engineered Materials, prov
 
 ## Deployment
 
-This application can be deployed to Vercel or any other Next.js-compatible hosting platform:
+### Local Deployment
+
+For local deployment, build and start the application:
 
 ```
 npm run build
 npm run start
 ```
+
+### Vercel Deployment
+
+This application is optimized for deployment on Vercel:
+
+1. Push your code to a GitHub repository:
+   ```
+   git init
+   git add .
+   git commit -m "Initial commit"
+   git remote add origin https://github.com/YOUR-USERNAME/riccimar5.git
+   git push -u origin main
+   ```
+
+2. Import your repository in the Vercel dashboard:
+   - Go to https://vercel.com/new
+   - Select your GitHub repository
+   - Vercel will automatically detect Next.js settings
+
+3. Configure environment variables:
+   - Add all variables from your `.env.local` file to the Vercel project settings
+   - Required variables:
+     - `NEXT_PUBLIC_SUPABASE_URL`
+     - `NEXT_PUBLIC_SUPABASE_ANON_KEY`
+     - `ANTHROPIC_API_KEY`
+     - `PERPLEXITY_API_KEY` (if used)
+
+4. Deploy your application:
+   - Click "Deploy"
+   - Vercel will build and deploy your application
+
+5. Continuous Deployment:
+   - Any push to the main branch will trigger a new deployment
+   - Preview deployments are created for pull requests
 
 ## Credits
 

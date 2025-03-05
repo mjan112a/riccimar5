@@ -9,13 +9,16 @@ export async function createClient() {
     process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
     {
       cookies: {
-        getAll() {
-          return cookieStore.getAll()
+        async getAll() {
+          // Handle cookieStore as a Promise
+          const cookieList = await cookieStore
+          return cookieList.getAll()
         },
-        setAll(cookiesToSet) {
+        async setAll(cookiesToSet) {
           try {
+            const cookieList = await cookieStore
             cookiesToSet.forEach(({ name, value, options }) =>
-              cookieStore.set(name, value, options)
+              cookieList.set(name, value, options)
             )
           } catch {
             // The `setAll` method was called from a Server Component.
